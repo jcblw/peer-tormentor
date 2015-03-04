@@ -1,9 +1,11 @@
 'use strict'
 
-var EventEmitter = require('eventemitter2').EventEmitter2
-var xhr = require('xhr')
-var qs = require('querystring')
-var config = require('../config.json');
+var EventEmitter = require('eventemitter2').EventEmitter2,
+    xhr = require('xhr'),
+    qs = require('querystring'),
+    config = require('../config.json'),
+    uuid = require('uuid');
+
 
 function Connection(channel) {
   var self = this;
@@ -67,24 +69,33 @@ Connection.prototype.getConfig = function (callback) {
 }
 
 Connection.prototype.onReady = function() {
+
+  var id = localStorage.getItem('clientId')
+
+  if (!id) {
+    id = uuid.v4()
+    localStorage.setItem('clientId', id)
+  }
+
+  this.id = id
+
   var broadcast = this.broadcast.bind(this),
     admin = this.admin,
     emit = this.emit.bind(this)
-  setTimeout(function(){
+  setTimeout(function() {
     broadcast({
       _connection: true,
       isAdmin: admin
     })
     emit('ready')
-  },1000)
+  }, 1000)
 }
 
 Connection.prototype.broadcast = function(payload) {
-  if (this.admin) {
-    this.webrtc.sendToAll('mute', {
-      name: JSON.stringify(payload)
-    })
-  }
+  payload.clientId = this.id
+  this.webrtc.sendToAll('mute', {
+    name: JSON.stringify(payload),
+  })
 }
 
 Connection.prototype.onMessage = function(e) {
@@ -96,7 +107,7 @@ Connection.prototype.onMessage = function(e) {
   }
 
   if (payload.name && payload.value) {
-    this.emit(name, value)
+    this.emit(payload.name, payload.value, payload.clientId)
   }
 }
 

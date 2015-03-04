@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "ebuild": "watchify -e index.js -o extension/background.js -d",
+    "ebuild": "watchify -e extension/index.js -o extension/background.js -d",
     "build": "watchify -e admin.js -o server.js -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,7 +16,9 @@
     "react": "^0.12.2",
     "simplewebrtc": "^1.15.1",
     "webrtc-data": "0.0.3",
-    "xhr": "^2.0.1"
+    "xhr": "^2.0.1",
+    "uuid": "^2.0.1",
+    "webrtc-data": "0.0.3"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
