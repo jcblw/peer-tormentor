@@ -1,0 +1,22 @@
+{
+  "name": "peer-connection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "watchify -e index.js -o bundle.js -d",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ethereumjs-lib": "^0.1.9",
+    "eventemitter2": "^0.4.14",
+    "simplewebrtc": "^1.15.1",
+    "webrtc-data": "0.0.3"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "watchify": "^2.4.0"
+  }
+}

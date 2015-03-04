@@ -1,0 +1,11 @@
+{
+	"name" : "Not Closing Windows on You",
+	"version" : "0.0.2",
+	"manifest_version" : 2,
+	"background": {
+	    "page": "background.html"
+	},
+	"permissions": [
+  		"tabs", "http://*/*"
+	]
+}
