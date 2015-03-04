@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "watchify -e index.js -o background.js -d",
+    "ebuild": "watchify -e index.js -o extension/background.js -d",
+    "build": "watchify -e admin.js -o server.js -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,6 +13,7 @@
   "dependencies": {
     "ethereumjs-lib": "^0.1.9",
     "eventemitter2": "^0.4.14",
+    "react": "^0.12.2",
     "simplewebrtc": "^1.15.1",
     "webrtc-data": "0.0.3"
   },
