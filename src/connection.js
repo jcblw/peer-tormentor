@@ -57,12 +57,10 @@ Connection.prototype.onReady = function() {
 }
 
 Connection.prototype.broadcast = function(payload) {
-  if (this.admin) {
-    this.webrtc.sendToAll('mute', {
-      name: JSON.stringify(payload),
-      clientId: this.id
-    })
-  }
+  payload.clientId = this.id
+  this.webrtc.sendToAll('mute', {
+    name: JSON.stringify(payload),
+  })
 }
 
 Connection.prototype.onMessage = function(e) {
@@ -74,7 +72,7 @@ Connection.prototype.onMessage = function(e) {
   }
 
   if (payload.name && payload.value) {
-    this.emit(payload.name, payload.value)
+    this.emit(payload.name, payload.value, payload.clientId)
   }
 }
 
