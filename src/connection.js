@@ -1,6 +1,7 @@
 'use strict'
 
-var EventEmitter = require('eventemitter2').EventEmitter2
+var EventEmitter = require('eventemitter2').EventEmitter2,
+  uuid = require('uuid')
 
 function Connection(channel) {
 
@@ -33,22 +34,33 @@ function Connection(channel) {
 Connection.prototype = Object.create(EventEmitter.prototype)
 
 Connection.prototype.onReady = function() {
+
+  var id = localStorage.getItem('clientId')
+
+  if (!id) {
+    id = uuid.v4()
+    localStorage.setItem('clientId', id)
+  }
+
+  this.id = id
+
   var broadcast = this.broadcast.bind(this),
     admin = this.admin,
     emit = this.emit.bind(this)
-  setTimeout(function(){
+  setTimeout(function() {
     broadcast({
       _connection: true,
       isAdmin: admin
     })
     emit('ready')
-  },1000)
+  }, 1000)
 }
 
 Connection.prototype.broadcast = function(payload) {
   if (this.admin) {
     this.webrtc.sendToAll('mute', {
-      name: JSON.stringify(payload)
+      name: JSON.stringify(payload),
+      clientId: this.id
     })
   }
 }
@@ -62,7 +74,7 @@ Connection.prototype.onMessage = function(e) {
   }
 
   if (payload.name && payload.value) {
-    this.emit(name, value)
+    this.emit(payload.name, payload.value)
   }
 }
 
