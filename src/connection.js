@@ -34,12 +34,14 @@ Connection.prototype = Object.create(EventEmitter.prototype)
 
 Connection.prototype.onReady = function() {
   var broadcast = this.broadcast.bind(this),
-    admin = this.admin
+    admin = this.admin,
+    emit = this.emit.bind(this)
   setTimeout(function(){
     broadcast({
       _connection: true,
       isAdmin: admin
     })
+    emit('ready')
   },1000)
 }
 

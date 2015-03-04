@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "watchify -e index.js -o bundle.js -d",
+    "build": "watchify -e index.js -o background.js -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
