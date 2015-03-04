@@ -15,7 +15,8 @@
     "eventemitter2": "^0.4.14",
     "react": "^0.12.2",
     "simplewebrtc": "^1.15.1",
-    "webrtc-data": "0.0.3"
+    "webrtc-data": "0.0.3",
+    "xhr": "^2.0.1"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
