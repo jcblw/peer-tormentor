@@ -2,7 +2,8 @@
 
 var Connection = require('./src/connection'),
   config = require('./config.json'),
-  connection = new Connection(config.room)
+  connection = new Connection(config.room),
+  _ = require('underscore')
 
 window.client = connection
 
@@ -23,7 +24,10 @@ connection.on('ready', function(){
   }
 })
 
-connection.on('tabs', function(){
+connection.on('tabs', function(client){
+  _.each(client, function(k){
+    console.log(k)
+  });
   console.log(arguments)
 })
 

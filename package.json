@@ -6,7 +6,8 @@
   "scripts": {
     "ebuild": "watchify -e extension/index.js -o extension/background.js -d",
     "build": "watchify -e admin.js -o server.js -d",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "srvdir ."
   },
   "author": "",
   "license": "ISC",
