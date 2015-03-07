@@ -1,7 +1,7 @@
 'use strict'
 
-var Connection = require('./src/connection'),
-  config = require('./config.json'),
+var Connection = require('../src/connection'),
+  config = require('../config.json'),
   connection = new Connection(config.room)
 
 window.client = connection
