@@ -4,25 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "adminbuild": "browserify -e admin/index.js -o admin/bundle.js -d",
-    "ebuild": "browserify -e extension/index.js -o extension/background.js -d",
+    "adminbuild": "browserify -t babelify -e admin/index.js -o admin/bundle.js",
+    "ebuild": "browserify -t babelify -e extension/index.js -o extension/background.js",
     "build": "npm run adminbuild && npm run ebuild",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "srvdir ."
+    "start": "srvdir ./admin",
+    "watchadmin": "watchify -t babelify -e admin/index.js -o admin/bundle.js -d -v"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "ethereumjs-lib": "^0.1.9",
     "eventemitter2": "^0.4.14",
-    "react": "^0.12.2",
+    "react": "^0.13.0-beta.1",
     "simplewebrtc": "^1.15.1",
-    "webrtc-data": "0.0.3",
-    "xhr": "^2.0.1",
     "uuid": "^2.0.1",
-    "webrtc-data": "0.0.3"
+    "webrtc-data": "0.0.3",
+    "xhr": "^2.0.1"
   },
   "devDependencies": {
+    "babelify": "^5.0.4",
     "browserify": "^9.0.3",
     "watchify": "^2.4.0"
   }
