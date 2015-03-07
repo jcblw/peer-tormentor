@@ -58,7 +58,7 @@ Connection.prototype.getConfig = function (callback) {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: qs.stringify({
-            ident: confi.ident,
+            ident: config.ident,
             secret: config.secret,
             domain: config.domain,
             application: "default",
