@@ -7,43 +7,40 @@ var EventEmitter = require('eventemitter2').EventEmitter2,
     uuid = require('uuid');
 
 
-function Connection(channel) {
-  var self = this;
-// This object will take in an array of XirSys STUN / TURN servers
-// and override the original peerConnectionConfig object
+function Connection(channel, options) {
 
+  options = options || {};
+
+  var self = this;
+  // This object will take in an array of XirSys STUN / TURN servers
+  // and override the original peerConnectionConfig object
+
+  this.admin = options.admin;
   this.getConfig(function(err, data, body){
     var response = JSON.parse(body);
-     var SimpleWebRTC = require('simplewebrtc')
-        self.webrtc = new SimpleWebRTC({
-          // we don't do video
-          localVideoEl: '',
-          remoteVideosEl: '',
-          // debug: true,
-          // dont ask for camera access
-          autoRequestMedia: false,
-          // dont negotiate media
-          receiveMedia: {
-            mandatory: {
-              OfferToReceiveAudio: false,
-              OfferToReceiveVideo: false
-            }
-          },
-          peerConnectionConfig: response.d
-        });
+    var SimpleWebRTC = require('simplewebrtc')
+    self.webrtc = new SimpleWebRTC({
+      // we don't do video
+      localVideoEl: '',
+      remoteVideosEl: '',
+      // debug: true,
+      // dont ask for camera access
+      autoRequestMedia: false,
+      // dont negotiate media
+      receiveMedia: {
+        mandatory: {
+          OfferToReceiveAudio: false,
+          OfferToReceiveVideo: false
+        }
+      },
+      peerConnectionConfig: response.d
+    });
 
-        self.clients = []
-        self.admins = []
-        self.admin = true
-
-        self.webrtc.joinRoom(channel)
-        self.webrtc.on('mute', self.onMessage.bind(self))
-        self.webrtc.on('connectionReady', self.onReady.bind(self))
-  });
-
-
+    self.webrtc.joinRoom(channel)
+    self.webrtc.on('mute', self.onMessage.bind(self))
+    self.webrtc.on('connectionReady', self.onReady.bind(self))
+  })
 }
-
 
 
 Connection.prototype = Object.create(EventEmitter.prototype)
@@ -52,20 +49,20 @@ Connection.prototype.getConfig = function (callback) {
   var peerConnectionConfig;
 
     xhr({
-        method: "POST",
-        uri: 'https://api.xirsys.com/getIceServers',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: qs.stringify({
-            ident: confi.ident,
-            secret: config.secret,
-            domain: config.domain,
-            application: "default",
-            room: 'default',
-            secure: 0
-        })
-    }, callback);
+      method: "POST",
+      uri: 'https://api.xirsys.com/getIceServers',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: qs.stringify({
+        ident: config.ident,
+        secret: config.secret,
+        domain: config.domain,
+        application: config.application,
+        room: config.room,
+        secure: 0
+      })
+    }, callback)
 }
 
 Connection.prototype.onReady = function() {
