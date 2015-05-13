@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "ebuild": "watchify -e extension/index.js -o extension/background.js -d",
-    "build": "watchify -e admin.js -o server.js -d",
+    "adminbuild": "browserify -e admin/index.js -o admin/bundle.js -d",
+    "ebuild": "browserify -e extension/index.js -o extension/background.js -d",
+    "build": "npm run adminbuild && npm run ebuild",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "srvdir ."
   },
