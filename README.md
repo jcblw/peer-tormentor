@@ -1,5 +1,7 @@
 ## Peer Tormentor
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jcblw/peer-tormentor.svg)](https://greenkeeper.io/)
+
 This is a plugin to prank your coworkers, and is an iteration on client-tormentor and tormentor that uses [WebRTC](http://www.webrtc.org/). 
 
 ### Setup
